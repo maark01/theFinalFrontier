@@ -1,0 +1,17 @@
+******************************* THE FINAL FRONTIER V2 *******************************
+
+
+https://ll.thespacedevs.com/2.3.0/astronauts/
+
+1. kör terve:
+- elkészíteni egy egyszerű frontend alkalmazást
+- backend oldalon 24 óránként fetchelni a fenti API adatait és átadni egy pgsql adatbázis szervernek
+- backend db-ből lekéri az adatokat és átadja frontendnek
+- frontenden megjeleníteni
+- dockerizálni db, backend és frontend részeket
+- ha ez sikeres akkor tovább fejleszteni új modulokkal az alkalmazást
+
+2. kör terve:
+- haproxy használata és több docker konténer futtatása és round robint beállítani
+- puppet mastert beállítani
+- rendszer tesztelése, tönkre vágni az alkalmazást és figyelni, hogyan rakja rendbe a puppet 
