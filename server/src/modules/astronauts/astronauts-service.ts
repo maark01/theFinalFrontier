@@ -13,9 +13,8 @@ export class AstronautsService {
 
     getAllAstronautsFromAPI = async (): Promise<Astronaut[]> => {
         return this.astronautsAPI.getAllAstronauts()
-            .then(async (response) => {
+            .then((response) => {
                 const astronautsList = response.results
-
                 astronautsList.map(astronaut => {
                     return this.astronautsMutation.insertAstronautsIntoDatabase(astronaut.id, astronaut.name, astronaut.status, astronaut.agency,
                         astronaut.image, astronaut.bio)

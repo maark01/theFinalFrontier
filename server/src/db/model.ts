@@ -1,6 +1,6 @@
 import { Status } from '../modules/status/model'
-import { Agency } from "../modules/agencies/model"
-import { Image } from "../modules/images/model"
+import { Agency } from '../modules/agencies/model'
+import { Image } from '../modules/images/model'
 
 
 export namespace db {
@@ -14,3 +14,4 @@ export namespace db {
         bio: string
     }
 }
+

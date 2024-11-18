@@ -12,7 +12,7 @@ export interface AstronautsMutation {
 
 export class PgAstronautsMutation extends SqlStore implements AstronautsMutation {
     insertAstronautsIntoDatabase = async (id: number, name: string, status: Status, agency: Agency, image: Image, bio: string): Promise<Astronaut> => {
-        return this.execute('INSERT INTO public.astronauts (id, name, status, agency, image, bio) VALUES ($1, $2, $3, $4, $5, $6)', [id, name, status.name, agency.name, image.url, bio])
+        return this.execute('INSERT INTO public.astronauts (id, name, status, agency, image, bio) VALUES ($1, $2, $3, $4, $5, $6)', [id, name, status.name, agency.name, image.image_url, bio])
             .then((result: QueryResult<db.Astronaut>) => {
                 const row = result.rows[0]
                 return {

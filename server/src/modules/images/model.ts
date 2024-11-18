@@ -1,5 +1,5 @@
 export interface Image {
     id: number
     name: string
-    url: string
+    image_url: string
 }
