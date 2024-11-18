@@ -7,7 +7,7 @@ const server: express.Application = express()
 
 server.use(json())
 
-server.use('/astronauts', astronautsRouter)
-server.use('/agencies', agenciesRouter)
+server.use('/api/astronauts', astronautsRouter)
+server.use('/api/agencies', agenciesRouter)
 
 export default server
