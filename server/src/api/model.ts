@@ -1,5 +1,4 @@
 import { ParamsDictionary } from 'express-serve-static-core'
-import { Astronaut } from '../modules/astronauts/model'
 
 export namespace API {
 
@@ -15,10 +14,6 @@ export namespace API {
 
         export interface WithId extends ParamsDictionary {
             astronautId: string
-        }
-
-        export interface Results {
-            results: Astronaut[]
         }
     }
 
