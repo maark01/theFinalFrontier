@@ -17,11 +17,11 @@ astronautsRouter.get('/', async (req: GetAllAstronautsFromApiRequest, res: Respo
         })
 })
 
-type GetAllAstronautsFromDbRequest = Request<never, Astronaut[] | API.Astronaut.WithError, never, never>
+type GetAllAstronautsRequest = Request<never, Astronaut[] | API.Astronaut.WithError, never, never>
 
 
-astronautsRouter.get('/db', async (req: GetAllAstronautsFromDbRequest, res: Response<Astronaut[] | API.Astronaut.WithError>) => {
-    astronautsService.getAllAstronautsFromDatabase()
+astronautsRouter.get('/db', async (req: GetAllAstronautsRequest, res: Response<Astronaut[] | API.Astronaut.WithError>) => {
+    astronautsService.getAllAstronauts()
         .then(astronauts => {
             res.status(200).send(astronauts)
         })
