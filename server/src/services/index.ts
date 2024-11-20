@@ -1,14 +1,16 @@
-import { AgenciesService } from '../modules/agencies/agencies-service'
-import { AstronautsService } from '../modules/astronauts/astronauts-service'
+import { AgencyService } from '../modules/agency/agency-service'
+import { AstronautService } from '../modules/astronaut/astronaut-service'
 import { HttpSpaceDevsAPI, SpaceDevsAPI } from '../gateway/space_devs/space_devs-api'
 import { AxiosHttpService, HttpService } from './http'
-import { AstronautsMutation, PgAstronautsMutation } from '../modules/astronauts/astronauts-mutation'
+import { AstronautMutation, PgAstronautMutation } from '../modules/astronaut/astronaut-mutation'
+import { AstronautQuery, SqlAstronautQuery } from '../modules/astronaut/astronaut-query'
+import { ImageMutation, PgImageMutation } from '../modules/image/image-mutation'
+import { StatusMutation, PgStatusMutation } from '../modules/status/status-mutation'
 import db from '../db/db-config'
-import { AstronautsQuery, SqlAstronautsQuery } from '../modules/astronauts/astronauts-query'
 require('dotenv').config()
 
-export let astronautsService: AstronautsService
-export let agenciesService: AgenciesService
+export let astronautService: AstronautService
+export let agencyService: AgencyService
 
 export const createServices = () => {
 
@@ -16,9 +18,16 @@ export const createServices = () => {
 
    const SpaceDevsAPIHttp: HttpService = new AxiosHttpService(baseUrl)
    const spaceDevsAPI: SpaceDevsAPI = new HttpSpaceDevsAPI(SpaceDevsAPIHttp)
-   const astronautsMutation: AstronautsMutation = new PgAstronautsMutation(db)
-   const astronautsQuery: AstronautsQuery = new SqlAstronautsQuery(db)
-   astronautsService = new AstronautsService(spaceDevsAPI, astronautsMutation, astronautsQuery)
    
-   agenciesService = new AgenciesService(spaceDevsAPI)
+   const astronautMutation: AstronautMutation = new PgAstronautMutation(db)
+   const astronautQuery: AstronautQuery = new SqlAstronautQuery(db)
+   
+   const imageMutation: ImageMutation = new PgImageMutation(db)
+
+   const statusMutation: StatusMutation = new PgStatusMutation(db)
+   
+   astronautService = new AstronautService(spaceDevsAPI, astronautMutation, astronautQuery, imageMutation, statusMutation)
+   
+   agencyService = new AgencyService(spaceDevsAPI)
+
 }

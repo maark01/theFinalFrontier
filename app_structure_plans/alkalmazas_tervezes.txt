@@ -51,10 +51,12 @@ I.a - astronauts modul;
     * astronautsMutation metódusok:
     -------------------------------
         - assignAstronauts(id, name, bio) a paramétereket egy INSERT sql metódussal beilleszti a public.astronaut táblákba
+        - addImage(id, name, imageUrl) a paramétereket egy INSERT sql metódussal beilleszti a public.image táblákba
         - assignStatus(statusId, statusName)  a paramétereket egy INSERT sql metódussal beilleszti a public.status táblába
-        - assignassignAstronautsImages(id, name, imageUrl) a paramétereket egy INSERT sql metódussal beilleszti a public.image táblákba
-        - assignAgenciesAstronauts(agencyId, AtronautId) a paramétereket egy INSERT sql metódussal beilleszti a public.agencies_astronauts kapcsoló táblába
-        - assignStatusAstronauts(statusId, astronautId)  a paramétereket egy INSERT sql metódussal beilleszti a public.astronauts_status kapcsoló táblába
+        - assignAgenciesToAstronauts(agencyId, AtronautId) a paramétereket egy INSERT sql metódussal beilleszti a public.agencies_astronauts kapcsoló táblába
+        - assignImageToAstronauts(imageId, AtronautId) a paramétereket egy INSERT sql metódussal beilleszti a public.astronauts_images kapcsoló táblába
+        - assignStatusToAstronauts(statusId, astronautId)  a paramétereket egy INSERT sql metódussal beilleszti a public.astronauts_status kapcsoló táblába
+
 
     * pgsql tábla végpontok:
     ------------------------

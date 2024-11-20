@@ -4,16 +4,16 @@ import { Agency } from './model'
 
 
 
-export interface AgenciesQuery {
+export interface AgencyQuery {
     getAllAgencies(): Promise<Agency[]>
 }
 
-export class SqlAgenciesQuery extends SqlStore implements AgenciesQuery {
+export class SqlAgencyQuery extends SqlStore implements AgencyQuery {
     getAllAgencies = async (): Promise<Agency[]> => {
-        return await this.query<Agency, db.Agency>('SELECT id, name FROM agencies',[], this.parseAgencies)
+        return await this.query<Agency, db.Agency>('SELECT id, name FROM agencies', [], this.parseAgency)
     }
 
-    private parseAgencies(row: db.Astronaut): Agency {
+    private parseAgency(row: db.Agency): Agency {
         return {
             id: +row.id,
             name: row.name,

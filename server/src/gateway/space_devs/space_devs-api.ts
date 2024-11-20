@@ -13,7 +13,7 @@ export class HttpSpaceDevsAPI implements SpaceDevsAPI {
     getAllAstronauts(): Promise<SpaceDevsAPI.Results> {
         return this.httpService.request<SpaceDevsAPI.Results>({
             method: 'GET',
-            path: `/astronauts`
+            path: `/astronauts/?limit=100`
         })
     }
 }

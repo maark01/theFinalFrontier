@@ -1,14 +1,18 @@
 import { SpaceDevsAPI } from '../../gateway/space_devs/space_devs-api'
-import { AstronautsMutation } from './astronauts-mutation'
-import { AstronautsQuery } from './astronauts-query'
+import { AstronautMutation } from './astronaut-mutation'
+import { ImageMutation } from '../image/image-mutation'
+import { StatusMutation } from '../status/status-mutation'
+import { AstronautQuery } from './astronaut-query'
 import { Astronaut } from './model'
 
-export class AstronautsService {
+export class AstronautService {
 
     constructor(
         private readonly spaceDevsAPI: SpaceDevsAPI,
-        private readonly astronautsMutation: AstronautsMutation,
-        private readonly astronautsQuery: AstronautsQuery
+        private readonly astronautMutation: AstronautMutation,
+        private readonly astronautQuery: AstronautQuery,
+        private readonly imageMutation: ImageMutation,
+        private readonly statusMutation: StatusMutation
     ) { }
 
     getAllAstronautsFromAPI = async (): Promise<Astronaut[]> => {
@@ -26,10 +30,14 @@ export class AstronautsService {
                         imageUrl: astronaut.image.image_url
                     }
                 }))
-                astronautsList.forEach(({ id, name, bio }) => {
-                    this.astronautsMutation.assignAstronauts(id, name, bio)
+
+                astronautsList.forEach(astronaut => {
+                    this.astronautMutation.addAstronauts(astronaut.id, astronaut.name, astronaut.bio)
+                    this.imageMutation.addImages(astronaut.image.id, astronaut.image.name, astronaut.image.imageUrl)
+                    this.statusMutation.addStatus(astronaut.status.id, astronaut.status.name)
                 })
                 return astronautsList
+
             })
             .catch(error => {
                 console.error('Error fetching astronauts: ', error)
@@ -38,7 +46,7 @@ export class AstronautsService {
     }
 
     getAllAstronauts = async (): Promise<Astronaut[]> => {
-        return this.astronautsQuery.getAllAstronauts()
+        return this.astronautQuery.getAllAstronauts()
             .then((astronaut: Astronaut[]) => {
                 if (astronaut === undefined) {
                     throw new Error('Request refused, incorrect request! Please try again!')

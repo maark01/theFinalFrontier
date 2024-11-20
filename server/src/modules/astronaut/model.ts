@@ -1,4 +1,6 @@
-import { Agency } from '../agencies/model'
+import { Agency } from '../agency/model'
+import { Image } from '../image/model'
+import { Status } from '../status/model'
 
 
 export interface Astronaut {
@@ -8,17 +10,6 @@ export interface Astronaut {
     agency?: Agency
     image?: Image
     bio: string
-}
-
-export interface Status {
-    id: number
-    name: string
-}
-
-export interface Image {
-    id: number
-    name: string
-    imageUrl: string
 }
 
 export interface Results {

@@ -4,13 +4,13 @@ import { Astronaut } from './model'
 
 
 
-export interface AstronautsQuery {
+export interface AstronautQuery {
     getAllAstronauts(): Promise<Astronaut[]>
 }
 
-export class SqlAstronautsQuery extends SqlStore implements AstronautsQuery {
+export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
     getAllAstronauts = async (): Promise<any> => {
-       return await this.query<Astronaut, db.Astronaut>('SELECT id, name, bio FROM public.astronauts', [], this.parseAstronauts)
+       return await this.query<Astronaut, db.Astronaut>('SELECT pas.id, pas.name, pas.bio FROM public.astronaut pas ORDER BY pas.id ASC', [], this.parseAstronauts)
     }
 
     private parseAstronauts(row: db.Astronaut): Astronaut {

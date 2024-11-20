@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
-import { astronautsService } from '../services/index'
-import { Astronaut, Results } from '../modules/astronauts/model'
+import { astronautService } from '../services/index'
+import { Astronaut, Results } from '../modules/astronaut/model'
 import { API } from './model'
 
 export const astronautsRouter = express.Router()
@@ -8,7 +8,7 @@ export const astronautsRouter = express.Router()
 type GetAllAstronautsFromApiRequest = Request<never, Results | API.Astronaut.WithError, never, never>
 
 astronautsRouter.get('/', async (req: GetAllAstronautsFromApiRequest, res: Response<Results | API.Astronaut.WithError>) => {
-    astronautsService.getAllAstronautsFromAPI()
+    astronautService.getAllAstronautsFromAPI()
         .then(astronauts => {
             res.status(200).send({ results: astronauts })
         })
@@ -21,7 +21,7 @@ type GetAllAstronautsRequest = Request<never, Astronaut[] | API.Astronaut.WithEr
 
 
 astronautsRouter.get('/db', async (req: GetAllAstronautsRequest, res: Response<Astronaut[] | API.Astronaut.WithError>) => {
-    astronautsService.getAllAstronauts()
+    astronautService.getAllAstronauts()
         .then(astronauts => {
             res.status(200).send(astronauts)
         })

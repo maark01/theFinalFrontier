@@ -2,7 +2,7 @@ import { SpaceDevsAPI } from '../../gateway/space_devs/space_devs-api'
 import { Agency } from './model'
 
 
-export class AgenciesService {
+export class AgencyService {
 
     constructor(private spaceDevsAPI: SpaceDevsAPI) { }
 
