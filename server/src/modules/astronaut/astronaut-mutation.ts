@@ -1,22 +1,29 @@
-import { QueryResult } from 'pg'
+import { PoolClient, QueryResult } from 'pg'
 import { SqlStore } from '../../db/sql-store'
-import { Astronaut} from './model'
+import { Astronaut } from './model'
 import { db } from '../../db/model'
 
 export interface AstronautMutation {
-    addAstronauts(id: number, name: string, bio: string): Promise<Astronaut>
+    addAstronaut(id: number, name: string, bio: string): Promise<Astronaut>
 }
 
-export class PgAstronautMutation extends SqlStore implements AstronautMutation {
-    addAstronauts = async (id: number, name: string, bio: string): Promise<Astronaut> => {
-        return this.execute('INSERT INTO public.astronaut (id, name, bio) VALUES ($1, $2, $3)', [id, name, bio])
-            .then((result: QueryResult<db.Astronaut>) => {
-                const row = result.rows[0]
-                return {
-                    id,
-                    name,
-                    bio
-                }
+export class SqlAstronautMutation extends SqlStore implements AstronautMutation {
+    addAstronaut = async (id: number, name: string, bio: string): Promise<Astronaut> => {
+        return this.inTx<Astronaut>((pool: PoolClient, check: (error: Error | null) => boolean, onDone: (error: Error | null, astronaut: Astronaut) => void) => {
+            this.addAstronautInTx(id, name, bio, pool, check, (astronaut: Astronaut) => {
+                onDone(null, astronaut)
             })
+        })
+    }
+
+    protected addAstronautInTx(id: number, name: string, bio: string, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronaut: Astronaut) => void): void {
+        pool.query('INSERT INTO public.astronaut (id, name, bio) VALUES ($1, $2, $3)',
+            [id, name, bio],
+            (error: Error | null, result: QueryResult<db.Astronaut>) => {
+                if (check(error)) { return }
+                const row = result.rows[0]
+                onDone({ id, name, bio })
+            }
+        )
     }
 }

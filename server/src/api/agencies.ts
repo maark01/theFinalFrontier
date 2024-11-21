@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import { Agency } from '../modules/agency/model'
-import { agenciesService } from '../services/index'
+import { agencyService } from '../services/index'
 import { API } from './model'
 
 

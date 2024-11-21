@@ -1,7 +1,5 @@
 import { SpaceDevsAPI } from '../../gateway/space_devs/space_devs-api'
-import { AstronautMutation } from './astronaut-mutation'
-import { ImageMutation } from '../image/image-mutation'
-import { StatusMutation } from '../status/status-mutation'
+import { AddAstronautMixin } from './add-astronaut-mixin'
 import { AstronautQuery } from './astronaut-query'
 import { Astronaut } from './model'
 
@@ -9,10 +7,9 @@ export class AstronautService {
 
     constructor(
         private readonly spaceDevsAPI: SpaceDevsAPI,
-        private readonly astronautMutation: AstronautMutation,
-        private readonly astronautQuery: AstronautQuery,
-        private readonly imageMutation: ImageMutation,
-        private readonly statusMutation: StatusMutation
+        private readonly addAstronautMixin: AddAstronautMixin,
+        private readonly astronautQuery: AstronautQuery
+
     ) { }
 
     getAllAstronautsFromAPI = async (): Promise<Astronaut[]> => {
@@ -32,12 +29,9 @@ export class AstronautService {
                 }))
 
                 astronautsList.forEach(astronaut => {
-                    this.astronautMutation.addAstronauts(astronaut.id, astronaut.name, astronaut.bio)
-                    this.imageMutation.addImages(astronaut.image.id, astronaut.image.name, astronaut.image.imageUrl)
-                    this.statusMutation.addStatus(astronaut.status.id, astronaut.status.name)
+                    this.addAstronautMixin.addAstronaut(astronaut.id, astronaut.name, astronaut.bio)
                 })
                 return astronautsList
-
             })
             .catch(error => {
                 console.error('Error fetching astronauts: ', error)

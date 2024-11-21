@@ -10,10 +10,12 @@ export interface AstronautQuery {
 
 export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
     getAllAstronauts = async (): Promise<any> => {
-       return await this.query<Astronaut, db.Astronaut>('SELECT pas.id, pas.name, pas.bio FROM public.astronaut pas ORDER BY pas.id ASC', [], this.parseAstronauts)
+       return await this.query<Astronaut, db.Astronaut>('SELECT pas.id, pas.name, pas.bio, ps.name, pi.image_url FROM public.astronaut pas JOIN public.status ps ON ps.id = pas.id JOIN public.image pi ON pi.id = pa.id ORDER BY pas.id ASC',
+        [], 
+        this.parseAstronaut)
     }
 
-    private parseAstronauts(row: db.Astronaut): Astronaut {
+    private parseAstronaut(row: db.Astronaut): Astronaut {
         return {
             id: +row.id,
             name: row.name,

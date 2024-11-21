@@ -3,6 +3,43 @@ import { Pool, QueryResult, PoolClient, QueryResultRow } from 'pg'
 export class SqlStore {
     constructor(protected db: Pool) { }
 
+    protected shouldAbort(error: Error | null): boolean {
+        if (error) {
+            console.error('Error in tx', error.stack)
+            return true
+        }
+        return false
+    }
+
+    protected abort(client: PoolClient, done: any) {
+        client.query('ROLLBACK', (error: Error) => {
+            if (error) {
+                console.error('Error rolling back client', error.stack)
+            }
+            done()
+        })
+    }
+
+    protected abortIfNeeded(error: Error | null, client: PoolClient, done: any, reject: (reason: Error | undefined) => void): boolean {
+        if (this.shouldAbort(error)) {
+            console.log('aborted', error)
+            this.abort(client, done)
+            reject(error ?? undefined)
+            return true
+        }
+        return false
+    }
+
+    protected doCommit(client: PoolClient, done: any, resolve: (result: any) => void, result: any) {
+        client.query('COMMIT', (error: any) => {
+            if (error) {
+                console.error('Error committing transaction', error.stack)
+            }
+            done()
+            resolve(result)
+        })
+    }
+
     protected execute(sql: string, params?: any[]): Promise<QueryResult> {
         return this.db.query(sql, params).catch((e) => {
             console.log(sql, params, e)
@@ -72,86 +109,47 @@ export class SqlStore {
             })
     }
 
-    // kell abortálni?
-    protected shouldAbort(error: Error | null | undefined): boolean {   // paramétere egy változó, ami vagy Error típusú (és tényleges hiba), vagy null vagy undefined (és nincs hiba)
-        if (error === null || error === undefined) {
-            return false    // ha null vagy undefined (tehát nincs hiba), akkor false, nem kell abortálni
-        }
-        console.error('Error in tx', error.stack)   // egyéb esetben, tehát ha hiba van, írd ki a hibát és térj vissza true-val
-        return true
-    }
-
-    // abortál
-    protected abort(client: PoolClient, done: any): void {  // egy kliens és egy bármilyen típusú done
-        client.query('ROLLBACK', (error: Error | null) => { // ROLLBACK, és callback függvényben error vagy null (a callback egy függvény a másik függvény paramétereként)
-            if (error) {    // ha van hiba
-                console.error('Error rolling back client', error?.stack)    // írja ki
-            }
-            done()  // "elengedjük" a client objektumot, visszatesszük a poolba hogy más tranzakciók használhassák
-        })
-    }
-
-    // abortál ha kell
-    protected abortIfNeeded(error: Error | null | undefined, client: PoolClient, done: any, reject: (reason: Error | undefined) => void): boolean {
-        if (this.shouldAbort(error)) {  // ha a shouldAbort true
-            console.log('[ABORT]: ', error) // a tranzakciót ABORT 
-            this.abort(client, done)    // meghívjuk az abort függvényt, ami ROLLBACK-kel
-            reject(error ?? undefined)  // a Promise-t reject-elje
-            return true // térjen vissza true-val, hogy igen, valóban abortálni kell
-        }
-        return false    // egyéb esetben false
-    }
-
-    // commit
-    protected doCommit(client: PoolClient, done: any, resolve: (result: any) => void, result: any, reject: (reason: Error | undefined) => void): void {
-        client.query('COMMIT', (error: any) => {    // COMMIT_teljünk, de ha bármi hiba lenne (pl. hálózati)
-            if (this.abortIfNeeded(error, client, done, reject)) {  // akkor nézzük meg h kell-e abortálni, ha igen akkor reject
-                return                                              // és térjünk vissza
-            }
-            done()  // ha nem, akkor done
-            resolve(result) // és Promise resolve az eredménnyel
-        })
-    }
-
-    // SQL transactionnél használjuk
-    // void body, paraméterei egy PoolClient, egy check, hogy van-e error, void onDone
-    protected inTx = <T>(body: (client: PoolClient, check: (error: Error | null) => boolean, onDone: (result: T) => void) => void): Promise<T> => {
-        return new Promise((resolve, reject) => {
-
-            // csatlakozik az adatbázishoz, paraméterei Error(ha van), poolClient, done
-            this.db.connect((error: Error | null | undefined, client: PoolClient | undefined, done: (release?: any) => void) => {
-                if (client === undefined) { // ha nincs kliens
-                    reject(error)   // akkor rögtön reject ágra megy és nem fut tovább a metódus
-                    return          // és vissza is tér
-                }
-                // ha az abortIfNeeded true, aminek feltétele hogy a shouldAbort true, akkor van Error és szintén rejectelünk és ABORT     
-                if (this.abortIfNeeded(error, client, done, reject)) {
+    protected readonly inTx = <T>(body: (client: PoolClient, check: (error: Error | null) => boolean, onDone: (error: Error | null, result: T) => void) => void): Promise<T> => {
+        return new Promise<T>((resolve, reject) => {
+            this.db.connect((error, client, done: (release?: any) => void) => {
+                if (client === undefined) {
+                    reject(error)
                     return
                 }
+                if (this.abortIfNeeded(error ?? null, client, done, reject)) return
 
-                client.query('BEGIN', (error) => {  // egyéb esetben BEGIN, ha hiba van akkor
-                    if (this.abortIfNeeded(error, client, done, reject)) {  // megnézzük hogy abortIfNeeded
-                        return
+                /*
+                const oldPoolQuery = client.query as unknown;
+                client.query = (...args: any) => {
+                    let sql = args[0] as string
+                    const params = args[1]
+                    for(let i = 0; i< params.length; i++) {
+                        sql = sql.replace(`$${i+1}`, params[i])
                     }
+                    console.log('QUERY:', sql);
+                    return (oldPoolQuery as any).apply(client, args);
+                }*/
 
+                client.query('BEGIN', (error) => {
+                    if (this.abortIfNeeded(error, client, done, reject)) return
                     body(
-                        client, // PoolClient
-                        (error: Error | null) => {  // check
+                        client,
+                        (error: Error | null) => {
                             return this.abortIfNeeded(error, client, done, reject)
                         },
-                        (result: T) => {    // onDone
-                            this.doCommit(client, done, resolve, result, reject)
+                        (error: Error | null, result: T) => {
+                            if (this.abortIfNeeded(error, client, done, reject)) return
+                            this.doCommit(client, done, resolve, result)
                         }
                     )
                 })
             })
         })
     }
+}
 
-
-    variable: (text: string, value: number) => string = (text: string, value: number) => {
-        return `${text}-${value}`
+export class SecureSqlStore extends SqlStore {
+    constructor(protected encryptionKey: string, db: Pool) {
+        super(db)
     }
-
-
 }
