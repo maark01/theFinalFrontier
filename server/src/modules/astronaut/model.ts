@@ -7,6 +7,9 @@ export interface Astronaut {
     id: number
     name: string
     bio: string
+}
+
+export interface AstronautWithStatusAndImage extends Astronaut {
     status: Status
     image: Image
 }

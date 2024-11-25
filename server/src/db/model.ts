@@ -3,9 +3,15 @@ export namespace db {
     export interface Astronaut {
         id: string
         name: string
-        status_name: string
-        image_url: string
         bio: string
+    }
+
+    export interface AstronautWithStatusAndImage {
+        id: string
+        name: string
+        bio: string
+        status: { id: string, name: string }
+        image: { id: string, name: string, image_url: string }
     }
 
     export interface AstronautStatus {
