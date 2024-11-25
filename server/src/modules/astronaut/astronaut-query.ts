@@ -1,7 +1,7 @@
 import { SqlStore } from '../../db/sql-store'
 import { EntityParser } from '../../db/entity-parser/entity-parser'
 import { AstronautWithStatusAndImage } from './model'
-import { db } from '../../db/model'
+import { pg } from '../../db/model'
 import { Pool } from 'pg'
 
 
@@ -13,11 +13,11 @@ export interface AstronautQuery {
 export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
 
     constructor(db: Pool,
-        private readonly astronautParser: EntityParser<db.AstronautWithStatusAndImage, AstronautWithStatusAndImage>
+        private readonly astronautParser: EntityParser<pg.AstronautWithStatusAndImage, AstronautWithStatusAndImage>
     ) { super(db) }
 
     getAllAstronauts = async (): Promise<AstronautWithStatusAndImage[]> => {
-        return await this.query<AstronautWithStatusAndImage, db.AstronautWithStatusAndImage>(
+        return await this.query<AstronautWithStatusAndImage, pg.AstronautWithStatusAndImage>(
             `SELECT ast.id, ast.name, ast.bio, stat.id, stat.name, img.id, img.name, img.image_url
                 FROM public.astronaut ast 
                 LEFT JOIN astronauts_images astimg ON astimg.astronaut_id = ast.id 

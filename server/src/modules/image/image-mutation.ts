@@ -1,7 +1,7 @@
 import { PoolClient, QueryResult } from 'pg'
 import { SqlStore } from '../../db/sql-store'
 import { Image } from './model'
-import { db } from '../../db/model'
+import { pg } from '../../db/model'
 
 export interface ImageMutation {
     addAstronautImage(id: number, name: string, imageUrl: string): Promise<Image>
@@ -19,7 +19,7 @@ export class SqlImageMutation extends SqlStore implements ImageMutation {
     protected addAstronautImageInTx(id: number, name: string, imageUrl: string, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (image: Image) => void): void {
         pool.query(`INSERT INTO public.image (id, name, image_url) VALUES ($1, $2, $3)`,
             [id, name, imageUrl],
-            (error: Error | null, result: QueryResult<db.Astronaut>) => {
+            (error: Error | null, result: QueryResult<pg.Astronaut>) => {
                 if (check(error)) { return }
                 const row = result.rows[0]
                 onDone({ id, name, imageUrl })

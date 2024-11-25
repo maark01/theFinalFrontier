@@ -1,4 +1,4 @@
-export namespace db {
+export namespace pg {
 
     export interface Astronaut {
         id: string

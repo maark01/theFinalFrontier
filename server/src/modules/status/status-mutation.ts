@@ -1,7 +1,7 @@
 import { PoolClient, QueryResult } from 'pg'
 import { SqlStore } from '../../db/sql-store'
 import { Status } from './model'
-import { db } from '../../db/model'
+import { pg } from '../../db/model'
 
 export interface StatusMutation {
     addAstronautStatus(id: number, name: string): Promise<Status>
@@ -19,8 +19,8 @@ export class SqlStatusMutation extends SqlStore implements StatusMutation {
     protected addAstronautStatusInTx(id: number, name: string, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (status: Status) => void): void {
         pool.query(`INSERT INTO public.status (id, name) VALUES ($1, $2)
             ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name`,
-            [id, name], 
-            (error: Error | null, result: QueryResult<db.Astronaut>) => {
+            [id, name],
+            (error: Error | null, result: QueryResult<pg.Astronaut>) => {
                 if (check(error)) { return }
                 const row = result.rows[0]
                 onDone({ id, name })
