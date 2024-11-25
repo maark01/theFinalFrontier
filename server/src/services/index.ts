@@ -7,8 +7,8 @@ import { AstronautMutation, SqlAstronautMutation } from '../modules/astronaut/as
 import { AstronautQuery, SqlAstronautQuery } from '../modules/astronaut/astronaut-query'
 import { ImageMutation, SqlImageMutation } from '../modules/image/image-mutation'
 import { StatusMutation, SqlStatusMutation } from '../modules/status/status-mutation'
-import db from '../db/db-config'
 import { AstronautParser } from '../db/entity-parser/entity-parser'
+import db from '../db/db-config'
 require('dotenv').config()
 
 export let astronautService: AstronautService
@@ -25,7 +25,9 @@ export const createServices = () => {
 
    const addAstronautMixin: AddAstronautMixin = new SqlAddAstronautMixin(db)
    const astronautMutation: AstronautMutation = new SqlAstronautMutation(db)
-   const astronautQuery: AstronautQuery = new SqlAstronautQuery(db)
+
+   const astronautParser: AstronautParser = new AstronautParser()
+   const astronautQuery: AstronautQuery = new SqlAstronautQuery(db, astronautParser)
 
    const imageMutation: ImageMutation = new SqlImageMutation(db)
 

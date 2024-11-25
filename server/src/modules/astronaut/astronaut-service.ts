@@ -1,7 +1,7 @@
 import { SpaceDevsAPI } from '../../gateway/space_devs/space_devs-api'
 import { AddAstronautMixin } from './add-astronaut-mixin'
 import { AstronautQuery } from './astronaut-query'
-import { Astronaut } from './model'
+import { Astronaut, AstronautWithStatusAndImage } from './model'
 
 export class AstronautService {
 
@@ -39,13 +39,13 @@ export class AstronautService {
             })
     }
 
-    getAllAstronauts = async (): Promise<Astronaut[]> => {
+    getAllAstronauts = async (): Promise<AstronautWithStatusAndImage[]> => {
         return this.astronautQuery.getAllAstronauts()
-            .then((astronaut: Astronaut[]) => {
-                if (astronaut === undefined) {
+            .then((astronauts: Astronaut[]) => {
+                if (astronauts === undefined) {
                     throw new Error('Request refused, incorrect request! Please try again!')
                 }
-                return astronaut
+                return astronauts
             })
             .catch(error => error.message)
     }

@@ -1,6 +1,6 @@
 import { SqlStore } from '../../db/sql-store'
-import { AstronautParser, EntityParser } from '../../db/entity-parser/entity-parser'
-import { Astronaut, AstronautWithStatusAndImage } from './model'
+import { EntityParser } from '../../db/entity-parser/entity-parser'
+import { AstronautWithStatusAndImage } from './model'
 import { db } from '../../db/model'
 import { Pool } from 'pg'
 
@@ -13,7 +13,7 @@ export interface AstronautQuery {
 export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
 
     constructor(db: Pool,
-        private astronautParser: EntityParser<db.AstronautWithStatusAndImage, AstronautWithStatusAndImage> = new AstronautParser()
+        private readonly astronautParser: EntityParser<db.AstronautWithStatusAndImage, AstronautWithStatusAndImage>
     ) { super(db) }
 
     getAllAstronauts = async (): Promise<AstronautWithStatusAndImage[]> => {
