@@ -6,10 +6,19 @@ import { Status } from '../status/model'
 export interface Astronaut {
     id: number
     name: string
-    status?: Status
-    agency?: Agency
-    image?: Image
     bio: string
+    status: Status
+    image: Image
+}
+
+export interface AstronautStatus {
+    astronautId: number
+    statusId: number
+}
+
+export interface AstronautImages {
+    astronautId: number
+    imageId: number
 }
 
 export interface Results {

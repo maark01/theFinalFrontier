@@ -29,7 +29,7 @@ export class AstronautService {
                 }))
 
                 astronautsList.forEach(astronaut => {
-                    this.addAstronautMixin.addAstronaut(astronaut.id, astronaut.name, astronaut.bio)
+                    this.addAstronautMixin.insertAstronaut(astronaut.id, astronaut.name, astronaut.bio, astronaut.image, astronaut.status)
                 })
                 return astronautsList
             })

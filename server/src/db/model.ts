@@ -3,11 +3,22 @@ export namespace db {
     export interface Astronaut {
         id: string
         name: string
+        status_name: string
+        image_url: string
         bio: string
     }
 
+    export interface AstronautStatus {
+        astronaut_id: string
+        status_id: string
+    }
+
+    export interface AstronautImages {
+        astronaut_id: string
+        image_id: string
+    }
+
     export interface Status {
-        id: string
         name: string
     }
 
