@@ -11,7 +11,7 @@ export namespace db {
         name: string
         bio: string
         status: { id: string, name: string }
-        image: { id: string, name: string, image_url: string }
+        image: { id: string, name: string, imageUrl: string }
     }
 
     export interface AstronautStatus {

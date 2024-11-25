@@ -1,9 +1,9 @@
 import { QueryResultRow } from 'pg'
-import { Astronaut, AstronautWithStatusAndImage } from '../../modules/astronaut/model'
+import { AstronautWithStatusAndImage } from '../../modules/astronaut/model'
 import { db } from '../model'
 
 
-export interface EntityParser<R extends db.AstronautWithStatusAndImage, T> {
+export interface EntityParser<R extends QueryResultRow, T> {
     parse(row: R): T
 }
 
@@ -15,7 +15,7 @@ export class AstronautParser implements EntityParser<db.AstronautWithStatusAndIm
             name: row.name,
             bio: row.bio,
             status: { id: +row.status.id, name: row.status.name },
-            image: { id: +row.image.id, name: row.image.name, imageUrl: row.image.image_url }
+            image: {id: +row.image.id, name: row.image.name, imageUrl: row.image.imageUrl }
         }
     }
 }

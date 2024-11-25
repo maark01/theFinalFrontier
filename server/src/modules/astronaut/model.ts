@@ -10,8 +10,8 @@ export interface Astronaut {
 }
 
 export interface AstronautWithStatusAndImage extends Astronaut {
-    status: Status
-    image: Image
+    status: { id: number, name: string }
+    image: { id: number, name: string, imageUrl: string }
 }
 
 export interface AstronautStatus {

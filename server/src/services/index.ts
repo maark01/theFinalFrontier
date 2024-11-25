@@ -8,6 +8,7 @@ import { AstronautQuery, SqlAstronautQuery } from '../modules/astronaut/astronau
 import { ImageMutation, SqlImageMutation } from '../modules/image/image-mutation'
 import { StatusMutation, SqlStatusMutation } from '../modules/status/status-mutation'
 import db from '../db/db-config'
+import { AstronautParser } from '../db/entity-parser/entity-parser'
 require('dotenv').config()
 
 export let astronautService: AstronautService

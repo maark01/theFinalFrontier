@@ -18,13 +18,13 @@ export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
 
     getAllAstronauts = async (): Promise<AstronautWithStatusAndImage[]> => {
         return await this.query<AstronautWithStatusAndImage, db.AstronautWithStatusAndImage>(
-            `SELECT ast.id, ast.name, ast.bio, stat.id, stat.name, img.id, img.name, img.image_url 
-            FROM public.astronaut ast 
-            JOIN astronauts_images astimg ON astimg.astronaut_id = ast.id 
-            JOIN image img ON img.id = astimg.image_id 
-            JOIN astronauts_status aststat ON aststat.astronaut_id = ast.id 
-            JOIN status stat ON stat.id = aststat.status_id 
-            ORDER BY ast.id ASC;`,
+            `SELECT ast.id, ast.name, ast.bio, stat.id, stat.name, img.id, img.name, img.image_url
+                FROM public.astronaut ast 
+                LEFT JOIN astronauts_images astimg ON astimg.astronaut_id = ast.id 
+                LEFT JOIN image img ON img.id = astimg.image_id 
+                LEFT JOIN astronauts_status aststat ON aststat.astronaut_id = ast.id 
+                LEFT JOIN status stat ON stat.id = aststat.status_id 
+                ORDER BY ast.id ASC;`,
             [],
             this.astronautParser.parse)
     }
