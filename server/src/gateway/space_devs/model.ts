@@ -9,8 +9,8 @@ export namespace SpaceDevsAPI {
         name: string
         bio: string
         status: Status
-        agency: Agency
         image: Image
+        agency: Agency
     }
 
     export interface Status {

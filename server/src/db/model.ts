@@ -10,8 +10,13 @@ export namespace pg {
         id: string
         name: string
         bio: string
-        status: { id: string, name: string }
-        image: { id: string, name: string, imageUrl: string }
+        status_id: string
+        status_name: string
+        image_id: string
+        image_name: string
+        image_url: string
+        /* status: Status
+        image: Image */
     }
 
     export interface AstronautStatus {
@@ -25,7 +30,8 @@ export namespace pg {
     }
 
     export interface Status {
-        name: string
+        status_id: string
+        status_name: string
     }
 
     export interface Agency {
@@ -34,8 +40,8 @@ export namespace pg {
     }
 
     export interface Image {
-        id: string
-        name: string
+        image_id: string
+        image_name: string
         image_url: string
     }
 }
