@@ -18,9 +18,12 @@ export class AstronautService {
                 const astronautsList = response.results.map(astronaut => ({
                     id: astronaut.id,
                     name: astronaut.name,
-                    status: astronaut.status,
-                    agency: astronaut.agency,
                     bio: astronaut.bio,
+                    status: {
+                        id: astronaut.status.id,
+                        name: astronaut.status.name
+                    },
+                    //agency: astronaut.agency,
                     image: {
                         id: astronaut.image.id,
                         name: astronaut.image.name,

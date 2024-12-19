@@ -23,8 +23,8 @@ export class SqlAddAstronautMixin extends SqlStore implements AddAstronautMixin 
                             this.assignImageToAstronautsInTx(id, image.id, pool, check, () => {
                                 onDone(null, {
                                     id: astronaut.id, name: astronaut.name, bio: astronaut.bio,
-                                    image: { id: image.id, name: image.name, imageUrl: image.imageUrl },
-                                    status: { id: status.id, name: status.name },
+                                    imageId: image.id, imageName: image.name, imageUrl: image.imageUrl ,
+                                    statusId: status.id, statusName: status.name ,
                                 })
                             })
                         })

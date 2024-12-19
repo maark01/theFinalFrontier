@@ -15,8 +15,6 @@ export namespace pg {
         image_id: string
         image_name: string
         image_url: string
-        /* status: Status
-        image: Image */
     }
 
     export interface AstronautStatus {
@@ -45,4 +43,3 @@ export namespace pg {
         image_url: string
     }
 }
-

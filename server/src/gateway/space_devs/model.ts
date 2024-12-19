@@ -10,7 +10,6 @@ export namespace SpaceDevsAPI {
         bio: string
         status: Status
         image: Image
-        agency: Agency
     }
 
     export interface Status {

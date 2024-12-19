@@ -9,15 +9,15 @@ export interface Astronaut {
     bio: string
 }
 
-export interface AstronautWithStatusAndImage{
+export interface AstronautWithStatusAndImage {
     id: number
     name: string
     bio: string
-    statusId: number
-    statusName: string
-    imageId: number
-    imageName: string
-    imageUrl: string
+    statusId: number | null
+    statusName: string | null
+    imageId: number | null
+    imageName: string | null
+    imageUrl: string | null
 }
 
 export interface AstronautStatus {
