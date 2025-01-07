@@ -5,7 +5,6 @@ export interface SpaceDevsAPI {
     getAllAstronauts(): Promise<SpaceDevsAPI.Results>
 }
 
-
 export class HttpSpaceDevsAPI implements SpaceDevsAPI {
 
     constructor(private httpService: HttpService) { }
