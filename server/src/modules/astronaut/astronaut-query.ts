@@ -30,7 +30,9 @@ export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
             LEFT JOIN 
                 astronauts_images astimg ON astimg.astronaut_id = ast.id
             LEFT JOIN 
-                image img ON img.id = astimg.image_id;`,
+                image img ON img.id = astimg.image_id
+            ORDER BY
+	            ast.id ASC;`,
             [],
             this.astronautParser.parse)
     }
