@@ -1,4 +1,10 @@
-test
+#documentation
+/app_structure_plans/alkalmazas_tevezes.txt
+/app_structure_plans/developing_plans.txt
+
+#frontend
+/client/node_modules
+
+#backend
 /server/node_modules
 /server/.env
-/client/node_modules
