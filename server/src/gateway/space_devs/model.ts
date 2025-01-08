@@ -7,8 +7,11 @@ export namespace SpaceDevsAPI {
     export interface Astronaut {
         id: number
         name: string
+        age: number
         bio: string
+        in_space: boolean
         status: Status
+        agency: Agency
         image: Image
     }
 
@@ -20,6 +23,8 @@ export namespace SpaceDevsAPI {
     export interface Agency {
         id: number
         name: string
+        abbrev: string
+        founding_year: number
     }
 
     export interface Image {

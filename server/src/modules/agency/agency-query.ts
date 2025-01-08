@@ -1,15 +1,15 @@
-import { db } from '../../db/model'
+//import { db } from '../../db/model'
 import { SqlStore } from '../../db/sql-store'
 import { Agency } from './model'
 
 
 
 export interface AgencyQuery {
-    getAllAgencies(): Promise<Agency[]>
+   // getAllAgencies(): Promise<Agency[]>
 }
 
 export class SqlAgencyQuery extends SqlStore implements AgencyQuery {
-    getAllAgencies = async (): Promise<Agency[]> => {
+  /*   getAllAgencies = async (): Promise<Agency[]> => {
         return await this.query<Agency, db.Agency>('SELECT id, name FROM agencies', [], this.parseAgency)
     }
 
@@ -18,5 +18,5 @@ export class SqlAgencyQuery extends SqlStore implements AgencyQuery {
             id: +row.id,
             name: row.name,
         }
-    }
+    } */
 }

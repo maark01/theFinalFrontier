@@ -3,15 +3,23 @@ export namespace pg {
     export interface Astronaut {
         id: string
         name: string
+        age:string
         bio: string
+        in_space: boolean
     }
 
-    export interface AstronautWithStatusAndImage {
+    export interface AstronautWithStatusAgencyImage {
         id: string
         name: string
+        age: string
         bio: string
+        in_space: boolean
         status_id: string
         status_name: string
+        agency_id: string
+        agency_name: string
+        abbrev: string
+        founding_year: string
         image_id: string
         image_name: string
         image_url: string
@@ -22,7 +30,12 @@ export namespace pg {
         status_id: string
     }
 
-    export interface AstronautImages {
+    export interface AstronautAgency {
+        astronaut_id: string
+        agency_id: string
+    }
+
+    export interface AstronautImage {
         astronaut_id: string
         image_id: string
     }
@@ -35,6 +48,8 @@ export namespace pg {
     export interface Agency {
         id: string
         name: string
+        abbrev: string
+        founding_year: string
     }
 
     export interface Image {
