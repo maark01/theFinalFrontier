@@ -9,14 +9,13 @@ export interface EntityParser<R extends QueryResultRow, T> {
 
 export class AstronautParser implements EntityParser<pg.AstronautWithStatusAgencyImage, AstronautWithStatusAgencyImage> {
 
-
     parse(row: pg.AstronautWithStatusAgencyImage): AstronautWithStatusAgencyImage {
         return {
             id: +row.id,
             name: row.name,
             age: +row.age,
             bio: row.bio,
-            inSpace: row.in_space || false, // ezen még javítani kell
+            inSpace: row.in_space,
             statusId: +row.status_id || null,
             statusName: row.status_name || null,
             agencyId: +row.agency_id || null,
