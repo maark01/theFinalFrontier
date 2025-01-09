@@ -4,3 +4,7 @@ export interface Agency {
     abbrev: string
     foundingYear: number
 }
+
+export interface Results {
+    results: Agency[]
+}

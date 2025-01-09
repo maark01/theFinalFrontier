@@ -1,5 +1,5 @@
-import { AgencyService } from '../modules/agency/agency-service'
 import { AstronautService } from '../modules/astronaut/astronaut-service'
+import { AgencyService } from '../modules/agency/agency-service'
 import { HttpSpaceDevsAPI, SpaceDevsAPI } from '../gateway/space_devs/space_devs-api'
 import { AxiosHttpService, HttpService } from './http'
 import { AddAstronautMixin, SqlAddAstronautMixin } from '../modules/astronaut/add-astronaut-mixin'
@@ -7,6 +7,7 @@ import { AstronautMutation, SqlAstronautMutation } from '../modules/astronaut/as
 import { AstronautQuery, SqlAstronautQuery } from '../modules/astronaut/astronaut-query'
 import { StatusMutation, SqlStatusMutation } from '../modules/status/status-mutation'
 import { AgencyMutation, SqlAgencyMutation } from '../modules/agency/agency-mutation'
+import { AgencyQuery, SqlAgencyQuery } from '../modules/agency/agency-query'
 import { ImageMutation, SqlImageMutation } from '../modules/image/image-mutation'
 import { AstronautParser, EntityParser } from '../db/entity-parser/entity-parser'
 import { AstronautWithStatusAgencyImage } from '../modules/astronaut/model'
@@ -36,12 +37,13 @@ export const createServices = () => {
    const statusMutation: StatusMutation = new SqlStatusMutation(db)
 
    const agencyMutation: AgencyMutation = new SqlAgencyMutation(db)
+   const agencyQuery: AgencyQuery = new SqlAgencyQuery(db)
 
    const imageMutation: ImageMutation = new SqlImageMutation(db)
 
    astronautService = new AstronautService(spaceDevsAPI, addAstronautMixin, astronautQuery)
 
-   agencyService = new AgencyService(spaceDevsAPI)
+   agencyService = new AgencyService(spaceDevsAPI, agencyQuery)
 }
 
 export function applyMixins(derivedCtor: any, constructors: any[]) {

@@ -9,7 +9,6 @@ export class AstronautService {
         private readonly spaceDevsAPI: SpaceDevsAPI,
         private readonly addAstronautMixin: AddAstronautMixin,
         private readonly astronautQuery: AstronautQuery
-
     ) { }
 
     getAllAstronautsFromAPI = async (): Promise<Astronaut[]> => {
@@ -51,11 +50,11 @@ export class AstronautService {
 
     getAllAstronauts = async (): Promise<AstronautWithStatusAgencyImage[]> => {
         return this.astronautQuery.getAllAstronauts()
-            .then((astronauts: AstronautWithStatusAgencyImage[]) => {
-                if (astronauts === undefined) {
+            .then((astronaut: AstronautWithStatusAgencyImage[]) => {
+                if (astronaut === undefined) {
                     throw new Error('Request refused, incorrect request! Please try again!')
                 }
-                return astronauts
+                return astronaut
             })
             .catch(error => error.message)
     }

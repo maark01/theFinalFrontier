@@ -13,8 +13,9 @@ export interface AstronautQuery {
 export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
 
     constructor(db: Pool,
-        private readonly astronautParser: EntityParser<pg.AstronautWithStatusAgencyImage, AstronautWithStatusAgencyImage>
-    ) { super(db) }
+        private readonly astronautParser: EntityParser<pg.AstronautWithStatusAgencyImage, AstronautWithStatusAgencyImage>) {
+        super(db)
+    }
 
     getAllAstronauts = async (): Promise<AstronautWithStatusAgencyImage[]> => {
         return await this.query<AstronautWithStatusAgencyImage, pg.AstronautWithStatusAgencyImage>(

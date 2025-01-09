@@ -1,7 +1,11 @@
 export namespace SpaceDevsAPI {
 
-    export interface Results {
+    export interface AstronautResults {
         results: Astronaut[]
+    }
+  
+    export interface AgencyResults {
+        results: Agency[]
     }
 
     export interface Astronaut {

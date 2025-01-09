@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import { astronautService } from '../services/index'
-import { Astronaut, AstronautWithStatusAgencyImage, Results } from '../modules/astronaut/model'
+import { AstronautWithStatusAgencyImage, Results } from '../modules/astronaut/model'
 import { API } from './model'
 
 export const astronautsRouter = express.Router()
@@ -21,8 +21,8 @@ type GetAllAstronautsRequest = Request<never, AstronautWithStatusAgencyImage[] |
 
 astronautsRouter.get('/db', async (req: GetAllAstronautsRequest, res: Response<AstronautWithStatusAgencyImage[] | API.Astronaut.WithError>) => {
     astronautService.getAllAstronauts()
-        .then((astronauts: AstronautWithStatusAgencyImage[]) => {
-            res.status(200).send(astronauts)
+        .then((astronaut: AstronautWithStatusAgencyImage[]) => {
+            res.status(200).send(astronaut)
         })
         .catch(error => {
             res.status(500).send({ error: error.message })

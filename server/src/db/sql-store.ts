@@ -118,18 +118,6 @@ export class SqlStore {
                 }
                 if (this.abortIfNeeded(error ?? null, client, done, reject)) return
 
-                /*
-                const oldPoolQuery = client.query as unknown;
-                client.query = (...args: any) => {
-                    let sql = args[0] as string
-                    const params = args[1]
-                    for(let i = 0; i< params.length; i++) {
-                        sql = sql.replace(`$${i+1}`, params[i])
-                    }
-                    console.log('QUERY:', sql);
-                    return (oldPoolQuery as any).apply(client, args);
-                }*/
-
                 client.query('BEGIN', (error) => {
                     if (this.abortIfNeeded(error, client, done, reject)) return
                     body(
