@@ -3,7 +3,7 @@ This is a full stack fan site of Astronomy, it develepod by typescript both fron
 Backend side has direct connection to pgSQL database.
 
 Further acheivements of development
-  - following the ISIS in live (leaflet)
+  - following the ISS in live (leaflet)
   - where are the Voyager probes 
   - to create authentication with authorization
   - CRUD comment section
