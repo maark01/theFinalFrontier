@@ -15,6 +15,7 @@ export interface AddAstronautMixin {
 }
 
 export interface SqlAddAstronautMixin extends SqlAstronautMutation, SqlStatusMutation, SqlAgencyMutation, SqlImageMutation { }
+
 export class SqlAddAstronautMixin extends SqlStore implements AddAstronautMixin {
     insertAstronaut(id: number, name: string, age: number, bio: string, inSpace: boolean, status: Status, agency: Agency, image: Image): Promise<AstronautWithStatusAgencyImage> {
         return this.inTx<AstronautWithStatusAgencyImage>((pool: PoolClient, check: (error: Error | null) => boolean, onDone: (error: Error | null, astronaut: AstronautWithStatusAgencyImage) => void) => {

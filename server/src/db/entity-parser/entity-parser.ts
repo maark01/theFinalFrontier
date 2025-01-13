@@ -1,7 +1,7 @@
 import { QueryResultRow } from 'pg'
 import { AstronautWithStatusAgencyImage } from '../../modules/astronaut/model'
-import { pg } from '../model'
 import { Agency } from '../../modules/agency/model'
+import { pg } from '../model'
 
 
 export interface EntityParser<R extends QueryResultRow, T> {
