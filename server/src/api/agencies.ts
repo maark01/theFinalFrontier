@@ -9,14 +9,13 @@ export const agenciesRouter = express.Router()
 type GetAllAgenciesFromApiRequest = Request<never, Results | API.Agency.WithError, never, never>
 
 agenciesRouter.get('/', async (req: GetAllAgenciesFromApiRequest, res: Response<Results | API.Agency.WithError>) => {
-    /*     agenciesService.getAllAgencies()
+    agencyService.getAllAgenciesFromAPI()
         .then(agency => {
-            console.log(agency)
-            res.status(200).send(agency)
+            res.status(200).send({ results: agency })
         })
         .catch(error => {
             if (error) res.status(500).send({ error: error.message })
-        }) */
+        })
 })
 
 type GetAllAgenciesRequest = Request<never, Agency[] | API.Agency.WithError, never, never>
