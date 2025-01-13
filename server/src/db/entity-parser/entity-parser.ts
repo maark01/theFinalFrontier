@@ -37,7 +37,7 @@ export class AgencyParser implements EntityParser<pg.Agency, Agency> {
             id: +row.id,
             name: row.name,
             abbrev: row.abbrev,
-            foundingYear: +row.founding_year
+            foundingYear: +row.founding_year || null
         }
     }
 }

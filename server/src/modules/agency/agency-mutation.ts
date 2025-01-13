@@ -4,19 +4,19 @@ import { Agency } from './model'
 import { pg } from '../../db/model'
 
 export interface AgencyMutation {
-    addAstronautAgency(id: number, name: string, abbrev: string, foundingYear: number): Promise<Agency>
+    addAgency(id: number, name: string, abbrev: string, foundingYear: number): Promise<Agency>
 }
 
 export class SqlAgencyMutation extends SqlStore implements AgencyMutation {
-    addAstronautAgency = async (id: number, name: string, abbrev: string, foundingYear: number): Promise<Agency> => {
+    addAgency = async (id: number, name: string, abbrev: string, foundingYear: number): Promise<Agency> => {
         return this.inTx<Agency>((pool: PoolClient, check: (error: Error | null) => boolean, onDone: (error: Error | null, agency: Agency) => void) => {
-            this.addAstronautAgencyInTx(id, name, abbrev, foundingYear, pool, check, (agency: Agency) => {
+            this.addAgencyInTx(id, name, abbrev, foundingYear, pool, check, (agency: Agency) => {
                 onDone(null, agency)
             })
         })
     }
 
-    protected addAstronautAgencyInTx(id: number, name: string, abbrev: string, foundingYear: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (agency: Agency) => void): void {
+    protected addAgencyInTx(id: number, name: string, abbrev: string, foundingYear: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (agency: Agency) => void): void {
         pool.query(`INSERT INTO public.agency (id, name, abbrev, founding_year) VALUES ($1, $2, $3, $4)
             ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, abbrev = EXCLUDED.abbrev, founding_year = EXCLUDED.founding_year`,
             [id, name, abbrev, foundingYear],

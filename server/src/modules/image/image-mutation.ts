@@ -17,7 +17,8 @@ export class SqlImageMutation extends SqlStore implements ImageMutation {
     }
 
     protected addAstronautImageInTx(id: number, name: string, imageUrl: string, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (image: Image) => void): void {
-        pool.query(`INSERT INTO public.image (id, name, image_url) VALUES ($1, $2, $3)`,
+        pool.query(`INSERT INTO public.image (id, name, image_url) VALUES ($1, $2, $3)
+             ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, image_url= EXCLUDED.image_url`,
             [id, name, imageUrl],
             (error: Error | null, result: QueryResult<pg.Astronaut>) => {
                 if (check(error)) { return }

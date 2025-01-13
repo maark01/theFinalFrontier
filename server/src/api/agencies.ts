@@ -23,7 +23,6 @@ type GetAllAgenciesRequest = Request<never, Agency[] | API.Agency.WithError, nev
 agenciesRouter.get('/db', async (req: GetAllAgenciesRequest, res: Response<Agency[] | API.Agency.WithError>) => {
     agencyService.getAllAgencies()
         .then((agency: Agency[]) => {
-            console.log(agency)
             res.status(200).send(agency)
         })
         .catch(error => {

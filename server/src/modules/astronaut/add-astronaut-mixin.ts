@@ -21,17 +21,15 @@ export class SqlAddAstronautMixin extends SqlStore implements AddAstronautMixin 
         return this.inTx<AstronautWithStatusAgencyImage>((pool: PoolClient, check: (error: Error | null) => boolean, onDone: (error: Error | null, astronaut: AstronautWithStatusAgencyImage) => void) => {
             this.addAstronautInTx(id, name, age, bio, inSpace, pool, check, (astronaut: Astronaut) => {
                 this.addAstronautStatusInTx(status.id, status.name, pool, check, (status: Status) => {
-                    this.addAstronautAgencyInTx(agency.id, agency.name, agency.abbrev, agency.foundingYear, pool, check, (agency: Agency) => {
-                        this.addAstronautImageInTx(image.id, image.name, image.imageUrl, pool, check, (image: Image) => {
-                            this.assignStatusToAstronautsInTx(id, status.id, pool, check, () => {
-                                this.assignAgencyToAstronautsInTx(id, agency.id, pool, check, () => {
-                                    this.assignImageToAstronautsInTx(id, image.id, pool, check, () => {
-                                        onDone(null, {
-                                            id: astronaut.id, name: astronaut.name, age: astronaut.age, bio: astronaut.bio, inSpace: astronaut.inSpace,
-                                            statusId: status.id, statusName: status.name,
-                                            agencyId: agency.id, agencyName: agency.name, abbrev: agency.abbrev, foundingYear: agency.foundingYear,
-                                            imageId: image.id, imageName: image.name, imageUrl: image.imageUrl,
-                                        })
+                    this.addAstronautImageInTx(image.id, image.name, image.imageUrl, pool, check, (image: Image) => {
+                        this.assignStatusToAstronautsInTx(id, status.id, pool, check, () => {
+                            this.assignAgencyToAstronautsInTx(id, agency.id, pool, check, () => {
+                                this.assignImageToAstronautsInTx(id, image.id, pool, check, () => {
+                                    onDone(null, {
+                                        id: astronaut.id, name: astronaut.name, age: astronaut.age, bio: astronaut.bio, inSpace: astronaut.inSpace,
+                                        statusId: status.id, statusName: status.name,
+                                        agencyId: agency.id, agencyName: agency.name, abbrev: agency.abbrev, foundingYear: agency.foundingYear,
+                                        imageId: image.id, imageName: image.name, imageUrl: image.imageUrl,
                                     })
                                 })
                             })

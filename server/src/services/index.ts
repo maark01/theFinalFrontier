@@ -25,7 +25,7 @@ export const createServices = () => {
 
    const baseUrl: any = process.env.BASE_URL
 
-   applyMixins(SqlAddAstronautMixin, [SqlAstronautMutation, SqlStatusMutation, SqlAgencyMutation, SqlImageMutation])
+   applyMixins(SqlAddAstronautMixin, [SqlAstronautMutation, SqlStatusMutation, SqlImageMutation])
    applyMixins(SqlAddAgencyMixin, [SqlAgencyMutation])
 
    const SpaceDevsAPIHttp: HttpService = new AxiosHttpService(baseUrl)
