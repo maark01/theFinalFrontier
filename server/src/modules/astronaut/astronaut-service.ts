@@ -14,10 +14,10 @@ export class AstronautService {
     getAllAstronautsFromAPI = async (): Promise<Astronaut[]> => {
         return this.spaceDevsAPI.getAllAstronauts()
             .then((response) => {
-                const astronautsList = response.results.map(astronaut => ({
+                const astronautsList = response.results.filter(e => e.agency !== null && e.image !== null).map(astronaut => ({
                     id: astronaut.id,
                     name: astronaut.name,
-                    age: astronaut.age,
+                    age: astronaut?.age || 0,
                     bio: astronaut.bio,
                     inSpace: astronaut.in_space,
                     status: {

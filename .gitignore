@@ -8,3 +8,6 @@
 #backend
 /server/node_modules
 /server/.env
+
+#test folder
+/test

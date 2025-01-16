@@ -25,7 +25,7 @@ export namespace SpaceDevsAPI {
     }
 
     export interface Agency {
-        id: number
+        id: number 
         name: string
         abbrev: string
         founding_year: number

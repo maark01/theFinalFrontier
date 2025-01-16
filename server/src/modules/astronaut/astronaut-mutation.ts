@@ -18,7 +18,8 @@ export class SqlAstronautMutation extends SqlStore implements AstronautMutation 
     }
 
     protected addAstronautInTx(id: number, name: string, age: number, bio: string, inSpace: boolean, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronaut: Astronaut) => void): void {
-        pool.query('INSERT INTO public.astronaut (id, name, age, bio, in_space) VALUES ($1, $2, $3, $4, $5)',
+        pool.query(`INSERT INTO public.astronaut (id, name, age, bio, in_space) VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, age = EXCLUDED.age, bio = EXCLUDED.bio, in_space = EXCLUDED.in_space`,
             [id, name, age, bio, inSpace],
             (error: Error | null, result: QueryResult<pg.Astronaut>) => {
                 if (check(error)) { return }

@@ -1,16 +1,8 @@
-import { QueryResultRow } from 'pg'
-import { AstronautWithStatusAgencyImage } from '../../modules/astronaut/model'
-import { Agency } from '../../modules/agency/model'
-import { pg } from '../model'
-
-
-export interface EntityParser<R extends QueryResultRow, T> {
-    parse(row: R): T
-}
-
-export class AstronautParser implements EntityParser<pg.AstronautWithStatusAgencyImage, AstronautWithStatusAgencyImage> {
-
-    parse(row: pg.AstronautWithStatusAgencyImage): AstronautWithStatusAgencyImage {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AgencyParser = exports.AstronautParser = void 0;
+class AstronautParser {
+    parse(row) {
         return {
             id: +row.id,
             name: row.name,
@@ -26,18 +18,18 @@ export class AstronautParser implements EntityParser<pg.AstronautWithStatusAgenc
             imageId: +row.image_id || null,
             imageName: row.image_name || null,
             imageUrl: row.image_url || null,
-        }
+        };
     }
 }
-
-export class AgencyParser implements EntityParser<pg.Agency, Agency> {
-
-    parse(row: pg.Agency): Agency {
+exports.AstronautParser = AstronautParser;
+class AgencyParser {
+    parse(row) {
         return {
             id: +row.id,
             name: row.name,
             abbrev: row.abbrev,
-            foundingYear: +row.founding_year
-        }
+            foundingYear: +row.founding_year || null
+        };
     }
 }
+exports.AgencyParser = AgencyParser;
