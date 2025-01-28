@@ -1,6 +1,5 @@
 #documentation
-/app_structure_plans/alkalmazas_tevezes.txt
-/app_structure_plans/developing_plans.txt
+/app_structure_plans/*.txt
 
 #frontend
 /client/node_modules
@@ -10,4 +9,5 @@
 /server/.env
 
 #test folder
-/test
+/test/*.js
+/test/*.html

@@ -6,4 +6,4 @@ const port = process.env.PORT
 
 createServices()
 
-server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+server.listen(port, () => console.log(`The Final Frontier app listening on port ${port}!`))
