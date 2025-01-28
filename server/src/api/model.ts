@@ -13,7 +13,7 @@ export namespace API {
         }
 
         export interface WithSearch {
-            search: string
+            search: string | null
         }
 
         export interface WithId extends ParamsDictionary {

@@ -20,7 +20,7 @@ astronautsRouter.get('/', async (req: GetAllAstronautsFromApiRequest, res: Respo
 type GetAllAstronautsRequest = Request<never, AstronautWithStatusAgencyImage[] | API.Astronaut.WithError, never, API.Astronaut.WithSearch>
 
 astronautsRouter.get('/db', async (req: GetAllAstronautsRequest, res: Response<AstronautWithStatusAgencyImage[] | API.Astronaut.WithError>) => {
-    const { search } = req.query
+    const search = req.query.search ?? undefined
 
     astronautService.getAllAstronauts(search)
         .then((astronaut: AstronautWithStatusAgencyImage[]) => {
