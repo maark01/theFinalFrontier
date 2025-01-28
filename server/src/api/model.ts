@@ -12,6 +12,10 @@ export namespace API {
             message: string
         }
 
+        export interface WithSearch {
+            search: string
+        }
+
         export interface WithId extends ParamsDictionary {
             astronautId: string
         }

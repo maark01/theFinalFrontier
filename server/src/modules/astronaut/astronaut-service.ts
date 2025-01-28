@@ -48,8 +48,8 @@ export class AstronautService {
             })
     }
 
-    getAllAstronauts = async (): Promise<AstronautWithStatusAgencyImage[]> => {
-        return this.astronautQuery.getAllAstronauts()
+    getAllAstronauts = async (search?: string): Promise<AstronautWithStatusAgencyImage[]> => {
+        return this.astronautQuery.getAllAstronauts(search)
             .then((astronaut: AstronautWithStatusAgencyImage[]) => {
                 if (astronaut === undefined) {
                     throw new Error('Request refused, incorrect request! Please try again!')

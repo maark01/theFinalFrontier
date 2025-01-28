@@ -1,8 +1,3 @@
-import { Agency } from '../agency/model'
-import { Image } from '../image/model'
-import { Status } from '../status/model'
-
-
 export interface Astronaut {
     id: number
     name: string
