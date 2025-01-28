@@ -9,5 +9,4 @@
 /server/.env
 
 #test folder
-/test/*.js
-/test/*.html
+/test
