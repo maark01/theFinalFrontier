@@ -12,8 +12,8 @@ export class AgencyService {
         private readonly agencyQuery: AgencyQuery
     ) { }
 
-    getAllAgenciesFromAPI = async (): Promise<Agency[]> => {
-        return this.spaceDevsAPI.getAllAgencies()
+    getAgenciesFromAPI = async (): Promise<Agency[]> => {
+        return this.spaceDevsAPI.getAgencies()
             .then((response) => {
                 const angenciesList = response.results.map(agency => ({
                     id: agency.id,
@@ -33,8 +33,8 @@ export class AgencyService {
             })
     }
 
-    async getAllAgencies(): Promise<Agency[]> {
-        return this.agencyQuery.getAllAgencies()
+    async getAgencies(): Promise<Agency[]> {
+        return this.agencyQuery.getAgencies()
             .then((agency: Agency[]) => {
                 if (agency === undefined) {
                     throw new Error('Request refused, incorrect request! Please try again!')

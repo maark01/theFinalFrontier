@@ -5,7 +5,7 @@ import { pg } from '../../db/model'
 import { Pool } from 'pg'
 
 export interface AstronautQuery {
-    getAllAstronauts(search?: string): Promise<AstronautWithStatusAgencyImage[]>
+    getAstronauts(search?: string): Promise<AstronautWithStatusAgencyImage[]>
 }
 
 export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
@@ -15,7 +15,7 @@ export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
         super(db)
     }
 
-    getAllAstronauts = async (search?: string): Promise<AstronautWithStatusAgencyImage[]> => {
+    getAstronauts = async (search?: string): Promise<AstronautWithStatusAgencyImage[]> => {
         let query = `
             SELECT ast.id AS "id", ast.name AS "name", ast.age AS "age", ast.bio AS "bio", ast.in_space AS "in_space",
                    stat.id AS "status_id", stat.name AS "status_name",

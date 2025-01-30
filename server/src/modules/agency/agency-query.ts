@@ -7,7 +7,7 @@ import { pg } from '../../db/model'
 
 
 export interface AgencyQuery {
-    getAllAgencies(): Promise<Agency[]>
+    getAgencies(): Promise<Agency[]>
 }
 
 export class SqlAgencyQuery extends SqlStore implements AgencyQuery {
@@ -17,7 +17,7 @@ export class SqlAgencyQuery extends SqlStore implements AgencyQuery {
         super(db)
     }
 
-    getAllAgencies = async (): Promise<Agency[]> => {
+    getAgencies = async (): Promise<Agency[]> => {
         return await this.query<Agency, pg.Agency>(
             `SELECT id, name, abbrev, founding_year FROM public.agency `,
             [],

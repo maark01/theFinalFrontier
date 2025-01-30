@@ -8,6 +8,10 @@ export namespace SpaceDevsAPI {
         results: Agency[]
     }
 
+    export interface LaunchesResults {
+        results: Launch []
+    }
+
     export interface Astronaut {
         id: number
         name: string
@@ -35,5 +39,21 @@ export namespace SpaceDevsAPI {
         id: number
         name: string
         image_url: string
+    }
+
+    export interface Mission {
+        id: number
+        name: string
+        type: string
+        description: string
+    }
+
+    export interface Launch {
+        id: string
+        name: string
+        net: Date
+        status: Status
+        image: Image
+        mission: Mission
     }
 }

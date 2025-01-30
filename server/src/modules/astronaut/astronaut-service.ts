@@ -11,8 +11,8 @@ export class AstronautService {
         private readonly astronautQuery: AstronautQuery
     ) { }
 
-    getAllAstronautsFromAPI = async (): Promise<Astronaut[]> => {
-        return this.spaceDevsAPI.getAllAstronauts()
+    getAstronautsFromAPI = async (): Promise<Astronaut[]> => {
+        return this.spaceDevsAPI.getAstronauts()
             .then((response) => {
                 const astronautsList = response.results.filter(e => e.agency !== null && e.image !== null).map(astronaut => ({
                     id: astronaut.id,
@@ -48,8 +48,8 @@ export class AstronautService {
             })
     }
 
-    getAllAstronauts = async (search?: string): Promise<AstronautWithStatusAgencyImage[]> => {
-        return this.astronautQuery.getAllAstronauts(search)
+    getAstronauts = async (search?: string): Promise<AstronautWithStatusAgencyImage[]> => {
+        return this.astronautQuery.getAstronauts(search)
             .then((astronaut: AstronautWithStatusAgencyImage[]) => {
                 if (astronaut === undefined) {
                     throw new Error('Request refused, incorrect request! Please try again!')
