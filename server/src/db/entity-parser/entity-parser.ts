@@ -1,5 +1,5 @@
 import { QueryResultRow } from 'pg'
-import { AstronautWithStatusAgencyImage } from '../../modules/astronaut/model'
+import { AstronautWithRelations } from '../../modules/astronaut/model'
 import { Agency } from '../../modules/agency/model'
 import { pg } from '../model'
 
@@ -8,9 +8,9 @@ export interface EntityParser<R extends QueryResultRow, T> {
     parse(row: R): T
 }
 
-export class AstronautParser implements EntityParser<pg.AstronautWithStatusAgencyImage, AstronautWithStatusAgencyImage> {
+export class AstronautParser implements EntityParser<pg.AstronautWithRelations, AstronautWithRelations> {
 
-    parse(row: pg.AstronautWithStatusAgencyImage): AstronautWithStatusAgencyImage {
+    parse(row: pg.AstronautWithRelations): AstronautWithRelations {
         return {
             id: +row.id,
             name: row.name,

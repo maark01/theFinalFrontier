@@ -1,4 +1,4 @@
-interface Mission {
+export interface Mission {
     id: number
     name: string
     type: string

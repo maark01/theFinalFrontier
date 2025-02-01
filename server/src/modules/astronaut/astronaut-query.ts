@@ -1,21 +1,21 @@
 import { SqlStore } from '../../db/sql-store'
 import { EntityParser } from '../../db/entity-parser/entity-parser'
-import { AstronautWithStatusAgencyImage } from './model'
+import { AstronautWithRelations } from './model'
 import { pg } from '../../db/model'
 import { Pool } from 'pg'
 
 export interface AstronautQuery {
-    getAstronauts(search?: string): Promise<AstronautWithStatusAgencyImage[]>
+    getAstronauts(search?: string): Promise<AstronautWithRelations[]>
 }
 
 export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
 
     constructor(db: Pool,
-        private readonly astronautParser: EntityParser<pg.AstronautWithStatusAgencyImage, AstronautWithStatusAgencyImage>) {
+        private readonly astronautParser: EntityParser<pg.AstronautWithRelations, AstronautWithRelations>) {
         super(db)
     }
 
-    getAstronauts = async (search?: string): Promise<AstronautWithStatusAgencyImage[]> => {
+    getAstronauts = async (search?: string): Promise<AstronautWithRelations[]> => {
         let query = `
             SELECT ast.id AS "id", ast.name AS "name", ast.age AS "age", ast.bio AS "bio", ast.in_space AS "in_space",
                    stat.id AS "status_id", stat.name AS "status_name",

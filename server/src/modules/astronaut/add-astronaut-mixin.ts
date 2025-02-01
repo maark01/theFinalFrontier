@@ -1,4 +1,4 @@
-import { Astronaut, AstronautWithStatusAgencyImage } from './model'
+import { Astronaut, AstronautWithRelations } from './model'
 import { SqlAstronautMutation } from './astronaut-mutation'
 import { SqlStatusMutation } from '../status/status-mutation'
 import { SqlAgencyMutation } from '../agency/agency-mutation'
@@ -11,14 +11,14 @@ import { PoolClient } from 'pg'
 
 
 export interface AddAstronautMixin {
-    insertAstronaut(id: number, name: string, age: number, bio: string, inSpace: boolean, status: Status, agency: Agency, image: Image): Promise<AstronautWithStatusAgencyImage>
+    insertAstronaut(id: number, name: string, age: number, bio: string, inSpace: boolean, status: Status, agency: Agency, image: Image): Promise<AstronautWithRelations>
 }
 
 export interface SqlAddAstronautMixin extends SqlAstronautMutation, SqlStatusMutation, SqlAgencyMutation, SqlImageMutation { }
 
 export class SqlAddAstronautMixin extends SqlStore implements AddAstronautMixin {
-    insertAstronaut(id: number, name: string, age: number, bio: string, inSpace: boolean, status: Status, agency: Agency, image: Image): Promise<AstronautWithStatusAgencyImage> {
-        return this.inTx<AstronautWithStatusAgencyImage>((pool: PoolClient, check: (error: Error | null) => boolean, onDone: (error: Error | null, astronaut: AstronautWithStatusAgencyImage) => void) => {
+    insertAstronaut(id: number, name: string, age: number, bio: string, inSpace: boolean, status: Status, agency: Agency, image: Image): Promise<AstronautWithRelations> {
+        return this.inTx<AstronautWithRelations>((pool: PoolClient, check: (error: Error | null) => boolean, onDone: (error: Error | null, astronaut: AstronautWithRelations) => void) => {
             this.addAstronautInTx(id, name, age, bio, inSpace, pool, check, (astronaut: Astronaut) => {
                 this.addAstronautStatusInTx(status.id, status.name, pool, check, (status: Status) => {
                     this.addAstronautImageInTx(image.id, image.name, image.imageUrl, pool, check, (image: Image) => {

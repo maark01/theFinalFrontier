@@ -5,7 +5,7 @@ import { AxiosHttpService, HttpService } from './http'
 import { AddAstronautMixin, SqlAddAstronautMixin } from '../modules/astronaut/add-astronaut-mixin'
 import { AstronautMutation, SqlAstronautMutation } from '../modules/astronaut/astronaut-mutation'
 import { AstronautQuery, SqlAstronautQuery } from '../modules/astronaut/astronaut-query'
-import { AstronautWithStatusAgencyImage } from '../modules/astronaut/model'
+import { AstronautWithRelations } from '../modules/astronaut/model'
 import { StatusMutation, SqlStatusMutation } from '../modules/status/status-mutation'
 import { AddAgencyMixin, SqlAddAgencyMixin } from '../modules/agency/add-agency-mixin'
 import { AgencyMutation, SqlAgencyMutation } from '../modules/agency/agency-mutation'
@@ -13,6 +13,7 @@ import { AgencyQuery, SqlAgencyQuery } from '../modules/agency/agency-query'
 import { AgencyParser, AstronautParser, EntityParser } from '../db/entity-parser/entity-parser'
 import { Agency } from '../modules/agency/model'
 import { ImageMutation, SqlImageMutation } from '../modules/image/image-mutation'
+import { LaunchService } from '../modules/launch/launch-service'
 import { pg } from '../db/model'
 import db from '../db/db-config'
 
@@ -20,6 +21,7 @@ require('dotenv').config()
 
 export let astronautService: AstronautService
 export let agencyService: AgencyService
+export let launchService: LaunchService
 
 export const createServices = () => {
 
@@ -33,12 +35,12 @@ export const createServices = () => {
 
    const addAstronautMixin: AddAstronautMixin = new SqlAddAstronautMixin(db)
    const astronautMutation: AstronautMutation = new SqlAstronautMutation(db)
-   const astronautParser: EntityParser<pg.AstronautWithStatusAgencyImage, AstronautWithStatusAgencyImage> = new AstronautParser()
+   const astronautParser: EntityParser<pg.AstronautWithRelations, AstronautWithRelations> = new AstronautParser()
    const astronautQuery: AstronautQuery = new SqlAstronautQuery(db, astronautParser)
 
    const statusMutation: StatusMutation = new SqlStatusMutation(db)
 
-   const addAgencyMixin : AddAgencyMixin = new SqlAddAgencyMixin(db)
+   const addAgencyMixin: AddAgencyMixin = new SqlAddAgencyMixin(db)
    const agencyMutation: AgencyMutation = new SqlAgencyMutation(db)
    const agencyParser: EntityParser<pg.Agency, Agency> = new AgencyParser()
    const agencyQuery: AgencyQuery = new SqlAgencyQuery(db, agencyParser)

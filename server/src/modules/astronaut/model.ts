@@ -6,7 +6,7 @@ export interface Astronaut {
     inSpace: boolean
 }
 
-export interface AstronautWithStatusAgencyImage {
+export interface AstronautWithRelations {
     id: number
     name: string
     age: number
