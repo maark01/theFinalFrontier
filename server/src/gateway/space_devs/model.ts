@@ -51,7 +51,7 @@ export namespace SpaceDevsAPI {
     export interface Launch {
         id: string
         name: string
-        net: Date
+        net: string
         status: Status
         image: Image
         mission: Mission

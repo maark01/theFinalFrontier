@@ -53,12 +53,12 @@ export namespace pg {
         id: string
         name: string
         net: string
-        launch_status_id: string
-        launch_status_name: string
+        status_id: string
+        status_name: string
         mission_id: string
         mission_name: string
         mission_type: string
-        description: string
+        mission_description: string
         image_id: string
         image_name: string
         image_url: string
@@ -79,8 +79,18 @@ export namespace pg {
         image_id: string
     }
 
-    export interface LaunchesStatus {
+    export interface LaunchImage {
+        launch_id: string
+        image_id: string
+    }
+
+    export interface LaunchStatus {
         launch_id: string
         status_id: string
+    }
+
+    export interface LaunchMission {
+        launch_id: string
+        mission_id: string
     }
 }

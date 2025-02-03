@@ -13,7 +13,8 @@ export interface AgencyQuery {
 export class SqlAgencyQuery extends SqlStore implements AgencyQuery {
 
     constructor(db: Pool,
-        private agencyParser: EntityParser<pg.Agency, Agency>) {
+        private agencyParser: EntityParser<pg.Agency, Agency> = new AgencyParser()
+    ) {
         super(db)
     }
 

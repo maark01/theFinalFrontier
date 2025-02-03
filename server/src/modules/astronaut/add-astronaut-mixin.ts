@@ -22,9 +22,9 @@ export class SqlAddAstronautMixin extends SqlStore implements AddAstronautMixin 
             this.addAstronautInTx(id, name, age, bio, inSpace, pool, check, (astronaut: Astronaut) => {
                 this.addAstronautStatusInTx(status.id, status.name, pool, check, (status: Status) => {
                     this.addAstronautImageInTx(image.id, image.name, image.imageUrl, pool, check, (image: Image) => {
-                        this.assignStatusToAstronautsInTx(id, status.id, pool, check, () => {
-                            this.assignAgencyToAstronautsInTx(id, agency.id, pool, check, () => {
-                                this.assignImageToAstronautsInTx(id, image.id, pool, check, () => {
+                        this.assignStatusToAstronautInTx(id, status.id, pool, check, () => {
+                            this.assignAgencyToAstronautInTx(id, agency.id, pool, check, () => {
+                                this.assignImageToAstronautInTx(id, image.id, pool, check, () => {
                                     onDone(null, {
                                         id: astronaut.id, name: astronaut.name, age: astronaut.age, bio: astronaut.bio, inSpace: astronaut.inSpace,
                                         statusId: status.id, statusName: status.name,

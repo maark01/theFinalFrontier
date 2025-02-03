@@ -62,23 +62,21 @@ export class HttpSpaceDevsAPI implements SpaceDevsAPI {
     async getLaunches(): Promise<SpaceDevsAPI.LaunchesResults> {
         const apiKey = process.env.API_KEY
         const promises: Promise<SpaceDevsAPI.LaunchesResults>[] = []
-        for (let k = 0; k <= 500; k += 100) {
+        for (let k = 0; k <= 20; k += 10) {
             promises.push(
                 delay(2000)
                     .then(() =>
                         this.http.request<SpaceDevsAPI.LaunchesResults>({
                             method: 'GET',
-                            path: `/launches/?limit=100&offset=${k}`,
+                            path: `/launches/?limit=10&offset=${k}`,
                             headers: { Authorization: `Token ${apiKey}` }
                         }))
             )
         }
         const results = await Promise.all(promises)
-        console.log(results)
         const combinedResults: SpaceDevsAPI.LaunchesResults = {
             results: results.flatMap(launch => launch.results)
         }
-        console.log(combinedResults)
         return combinedResults
     }
 }

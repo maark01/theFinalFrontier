@@ -29,8 +29,8 @@ export class SqlAstronautMutation extends SqlStore implements AstronautMutation 
         )
     }
 
-    protected assignStatusToAstronautsInTx(astronautId: number, statusId: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronautStatus: AstronautStatus) => void): void {
-        pool.query('INSERT INTO public.astronauts_status (astronaut_id, status_id) VALUES ($1, $2)',
+    protected assignStatusToAstronautInTx(astronautId: number, statusId: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronautStatus: AstronautStatus) => void): void {
+        pool.query(`INSERT INTO public.astronauts_status (astronaut_id, status_id) VALUES ($1, $2)`,
             [astronautId, statusId],
             (error: Error | null, result: QueryResult<pg.AstronautStatus>) => {
                 if (check(error)) { return }
@@ -40,8 +40,8 @@ export class SqlAstronautMutation extends SqlStore implements AstronautMutation 
         )
     }
 
-    protected assignAgencyToAstronautsInTx(astronautId: number, agencyId: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronautAgency: AstronautAgency) => void): void {
-        pool.query('INSERT INTO public.agencies_astronauts (astronaut_id, agency_id) VALUES ($1, $2)',
+    protected assignAgencyToAstronautInTx(astronautId: number, agencyId: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronautAgency: AstronautAgency) => void): void {
+        pool.query(`INSERT INTO public.agencies_astronauts (astronaut_id, agency_id) VALUES ($1, $2)`,
             [astronautId, agencyId],
             (error: Error | null, result: QueryResult<pg.AstronautAgency>) => {
                 if (check(error)) { return }
@@ -51,8 +51,8 @@ export class SqlAstronautMutation extends SqlStore implements AstronautMutation 
         )
     }
 
-    protected assignImageToAstronautsInTx(astronautId: number, imageId: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronautImage: AstronautImage) => void): void {
-        pool.query('INSERT INTO public.astronauts_images (astronaut_id, image_id) VALUES ($1, $2)',
+    protected assignImageToAstronautInTx(astronautId: number, imageId: number, pool: PoolClient, check: (error: Error | null) => boolean, onDone: (astronautImage: AstronautImage) => void): void {
+        pool.query(`INSERT INTO public.astronauts_images (astronaut_id, image_id) VALUES ($1, $2)`,
             [astronautId, imageId],
             (error: Error | null, result: QueryResult<pg.AstronautImage>) => {
                 if (check(error)) { return }

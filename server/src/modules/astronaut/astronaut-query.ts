@@ -1,5 +1,5 @@
 import { SqlStore } from '../../db/sql-store'
-import { EntityParser } from '../../db/entity-parser/entity-parser'
+import { AstronautParser, EntityParser } from '../../db/entity-parser/entity-parser'
 import { AstronautWithRelations } from './model'
 import { pg } from '../../db/model'
 import { Pool } from 'pg'
@@ -11,7 +11,8 @@ export interface AstronautQuery {
 export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
 
     constructor(db: Pool,
-        private readonly astronautParser: EntityParser<pg.AstronautWithRelations, AstronautWithRelations>) {
+        private readonly astronautParser: EntityParser<pg.AstronautWithRelations, AstronautWithRelations> = new AstronautParser()
+    ) {
         super(db)
     }
 
@@ -45,7 +46,7 @@ export class SqlAstronautQuery extends SqlStore implements AstronautQuery {
         try {
             const result = await this.db.query(
                 query,
-                search ? [`%${search}%`] : []  
+                search ? [`%${search}%`] : []
             )
             return result.rows.map(this.astronautParser.parse)
         } catch (error) {
